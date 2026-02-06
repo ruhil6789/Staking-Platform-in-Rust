@@ -1,0 +1,206 @@
+{
+    "version": "0.1.0",
+    "name": "staking_contract",
+    "instructions": [
+        {
+            "name": "initializeStaking",
+            "accounts": [
+                {
+                    "name": "stakingAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "stake",
+            "accounts": [
+                {
+                    "name": "stakingAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userStake",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "amount",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "unstake",
+            "accounts": [
+                {
+                    "name": "stakingAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userStake",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "authority",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "amount",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "withdrawRewards",
+            "accounts": [
+                {
+                    "name": "stakingAccount",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "userStake",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "authority",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "viewRewards",
+            "accounts": [
+                {
+                    "name": "stakingAccount",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "userStake",
+                    "isMut": false,
+                    "isSigner": false
+                },
+                {
+                    "name": "user",
+                    "isMut": false,
+                    "isSigner": true
+                }
+            ],
+            "args": []
+        }
+    ],
+    "accounts": [
+        {
+            "name": "stakingAccount",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "authority",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "totalStaked",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "stakersCount",
+                        "type": "u32"
+                    },
+                    {
+                        "name": "lastUpdateTime",
+                        "type": "i64"
+                    },
+                    {
+                        "name": "rewardRate",
+                        "type": "u64"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "userStake",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "authority",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "amount",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "stakedAt",
+                        "type": "i64"
+                    },
+                    {
+                        "name": "lastRewardCalculated",
+                        "type": "i64"
+                    },
+                    {
+                        "name": "pendingRewards",
+                        "type": "u64"
+                    }
+                ]
+            }
+        }
+    ],
+    "errors": [
+        {
+            "code": 6000,
+            "name": "InsufficientBalance",
+            "msg": "Insufficient staked balance"
+        },
+        {
+            "code": 6001,
+            "name": "NoRewards",
+            "msg": "No rewards available to withdraw"
+        }
+    ]
+}
